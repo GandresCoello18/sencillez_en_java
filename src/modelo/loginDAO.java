@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import vista.form;
 import vista.login;
 
 /**
@@ -27,16 +28,21 @@ public class loginDAO extends conexion{
         statement.setString(1, login_modelo.getUsuario());
         statement.setString(2, login_modelo.getClave());
         ResultSet result = statement.executeQuery();
+        String veri = null;
         while(result.next()){
             String obt = result.getString(2);
             String obt_2 = result.getString(4);
+            veri = "exito";
             System.out.println(obt); 
             System.out.println(obt_2);
-            if(obt.length() > 0 && obt_2.length() > 0){
                 JOptionPane.showMessageDialog(login, "ACCESO CONCEDIDO "+ " Bienvenido.. ", "", JOptionPane.INFORMATION_MESSAGE);
-            }
+                    form ventana = new form();
+                    ventana.setLocationRelativeTo(null);
+                    ventana.setVisible(true);
+                    login vista = new login();
+                    vista.setVisible(false);
         }
-        if(result.next() == false){
+        if(veri == null){
             JOptionPane.showMessageDialog(login, "DATOS INVALIDOS", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         desconectar();
